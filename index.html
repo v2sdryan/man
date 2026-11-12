@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>聖經問答 100 題（課本八頁精選）</title>
+<style>
+  :root {
+    --paper: #f5efe3;
+    --paper-2: #fbf7ee;
+    --card: #fffdf8;
+    --ink: #1e2430;
+    --muted: #6f6a5e;
+    --line: #ded3bf;
+    --navy: #1f3b73;
+    --navy-soft: #e7ecf6;
+    --amber: #b0731c;
+    --green: #2f7d5b;
+    --green-soft: #e9f4ee;
+    --red: #b23a2e;
+    --red-soft: #fbecea;
+    --shadow: 0 1px 0 rgba(60, 45, 20, .05), 0 10px 30px -18px rgba(40, 30, 10, .35);
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      radial-gradient(1100px 500px at 12% -8%, #fffaf0 0%, rgba(255,250,240,0) 60%),
+      radial-gradient(900px 500px at 100% 0%, #f0e6d2 0%, rgba(240,230,210,0) 55%),
+      var(--paper);
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Heiti TC", sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: max(30px, env(safe-area-inset-bottom));
+  }
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 44px 0 24px; position: relative; }
+  .kicker {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 11px; letter-spacing: .32em; text-transform: uppercase;
+    color: var(--amber); font-weight: 700;
+  }
+  .kicker::before { content: ""; width: 34px; height: 1px; background: var(--amber); }
+  h1 {
+    font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+    font-size: clamp(2rem, 4.8vw, 3.2rem);
+    line-height: 1.18; margin: 12px 0 8px; letter-spacing: .02em;
+  }
+  h1 .thin { font-weight: 400; color: var(--navy); }
+  .sub { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .sub b { color: var(--ink); font-weight: 600; }
+  .hero-rule { margin-top: 20px; height: 1px; background: linear-gradient(90deg, var(--line), rgba(222,211,191,0)); }
+
+  /* ---------- toolbar ---------- */
+  .toolbar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(245, 239, 227, .94);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 4px 16px -8px rgba(30, 20, 10, 0.08);
+  }
+  .toolbar-inner {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding-block: 10px;
+  }
+  .meter { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); font-weight: 500; }
+  .track { width: 110px; height: 6px; border-radius: 99px; background: #e4dac7; overflow: hidden; }
+  .fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--amber), #d39a3d); transition: width .25s ease; }
+  .score { font-variant-numeric: tabular-nums; }
+  .score b { color: var(--navy); font-size: 16px; font-weight: 700; }
+  .spacer { flex: 1; }
+  .btn-group { display: flex; gap: 8px; align-items: center; }
+  .btn {
+    font: inherit; font-size: 13px; font-weight: 600;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    padding: 8px 14px; border-radius: 999px; cursor: pointer;
+    min-height: 40px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: all .15s ease;
+    user-select: none; -webkit-user-select: none;
+  }
+  .btn:hover { border-color: var(--amber); color: var(--amber); }
+  .btn:active { transform: scale(0.96); background: #eee5d3; }
+  .btn.primary { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .btn.primary:hover { background: #18305f; color: #fff; }
+  .btn.primary:active { transform: scale(0.96); background: #122448; }
+
+  /* ---------- filter chips ---------- */
+  .filters {
+    display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    padding-block: 8px 10px; scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .chip {
+    font: inherit; font-size: 13px; color: var(--muted);
+    background: transparent; border: 1px solid transparent; border-radius: 999px;
+    padding: 6px 14px; cursor: pointer; transition: all .15s ease;
+    flex-shrink: 0; white-space: nowrap; min-height: 36px;
+    user-select: none; -webkit-user-select: none;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--line); }
+  .chip:active { transform: scale(0.96); }
+  .chip.active { background: var(--navy-soft); color: var(--navy); border-color: #c8d4ea; font-weight: 700; }
+
+  /* ---------- parts / questions ---------- */
+  main { padding: 20px 0 40px; }
+  .part { margin: 0 0 36px; }
+  .part[hidden] { display: none; }
+  .part-head {
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    padding: 0 0 10px; margin-bottom: 6px; border-bottom: 2px solid var(--ink);
+  }
+  .part-no {
+    font-family: "Noto Serif TC", serif; font-size: 11px; letter-spacing: .22em;
+    color: var(--amber); font-weight: 700;
+  }
+  .part-head h2 {
+    font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+    font-size: clamp(1.25rem, 2.6vw, 1.6rem); margin: 0; font-weight: 700;
+  }
+  .part-range { margin-left: auto; font-size: 12px; color: var(--muted); letter-spacing: .06em; }
+
+  .q {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 18px 20px 16px; margin-top: 14px; box-shadow: var(--shadow);
+    break-inside: avoid;
+  }
+  .q-text {
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 16px; line-height: 1.6; font-weight: 600; margin: 0 0 12px;
+  }
+  .q-num {
+    flex: none; min-width: 28px; height: 28px; padding: 0 6px;
+    display: inline-grid; place-items: center;
+    font-family: "Noto Serif TC", serif; font-size: 13px; font-weight: 700;
+    color: var(--navy); background: var(--navy-soft); border-radius: 7px;
+    font-variant-numeric: tabular-nums;
+  }
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px; text-align: left;
+    font: inherit; font-size: 15px; color: var(--ink);
+    background: #fff; border: 1px solid #e7ddcb; border-radius: 12px;
+    padding: 12px 14px; cursor: pointer; min-height: 48px;
+    transition: all .15s ease;
+    user-select: none; -webkit-user-select: none;
+  }
+  .opt:hover { border-color: #c9b795; box-shadow: 0 4px 14px -8px rgba(60,40,0,.3); }
+  .opt:active:not(:disabled) {
+    transform: scale(0.985);
+    background: #f7f2e7;
+  }
+  .opt .letter {
+    flex: none; width: 26px; height: 26px; display: grid; place-items: center;
+    border-radius: 50%; background: #f0e7d6; color: #6a5a3c;
+    font-size: 12.5px; font-weight: 700; margin-top: 1px;
+  }
+  .opt .txt { flex: 1; line-height: 1.5; }
+  .q.answered .opt { cursor: default; }
+  .q.answered .opt:hover { border-color: #e7ddcb; box-shadow: none; }
+  .q.answered .opt:active { transform: none; }
+  .opt.correct { background: var(--green-soft) !important; border-color: var(--green) !important; }
+  .opt.correct .letter { background: var(--green); color: #fff; }
+  .opt.wrong { background: var(--red-soft) !important; border-color: var(--red) !important; }
+  .opt.wrong .letter { background: var(--red); color: #fff; }
+  .q.answered .opt:not(.correct):not(.wrong) { opacity: .6; }
+
+  .answer-line {
+    display: none; margin: 12px 0 0; padding-top: 10px;
+    border-top: 1px dashed var(--line); font-size: 13.5px; color: var(--muted);
+  }
+  .answer-line strong { color: var(--green); font-size: 15px; }
+  .q.answered .answer-line, body.reveal .answer-line { display: block; }
+
+  /* ---------- answer key ---------- */
+  .key {
+    margin: 10px 0 60px; padding: 22px 24px;
+    background: var(--paper-2); border: 1px solid var(--line); border-radius: 16px;
+  }
+  .key-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .key-head h2 {
+    font-family: "Noto Serif TC", serif; font-size: 1.3rem; margin: 0;
+  }
+  .key-head span { font-size: 12px; color: var(--muted); }
+  .key-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+  }
+  .key-cell {
+    display: flex; justify-content: space-between; gap: 4px;
+    font-size: 12.5px; color: var(--muted); padding: 6px 8px;
+    background: #fff; border: 1px solid #e9dfcd; border-radius: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .key-cell b { color: var(--navy); }
+  body:not(.reveal) .key { display: none; }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 18px 0 34px;
+    color: var(--muted); font-size: 13px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between;
+  }
+
+  /* ---------- iPad & Mobile Responsive ---------- */
+  @media (max-width: 900px) {
+    .wrap { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+    .hero { padding: 30px 0 16px; }
+    .opts { grid-template-columns: 1fr; gap: 10px; }
+    .opt { padding: 13px 16px; min-height: 52px; font-size: 15.5px; }
+    .part-range { width: 100%; margin-left: 0; margin-top: 2px; }
+    .toolbar-inner { gap: 10px; }
+    .btn-group { margin-left: auto; }
+    .key-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .meter .track { width: 85px; }
+  }
+
+  @media (max-width: 600px) {
+    .meter { font-size: 12px; }
+    .btn { font-size: 12px; padding: 6px 11px; min-height: 36px; }
+    .chip { font-size: 12px; padding: 5px 12px; }
+    .key-grid { grid-template-columns: repeat(5, 1fr); }
+  }
+
+  /* ---------- print ---------- */
+  @media print {
+    body { background: #fff; }
+    .toolbar, .filters, .hero-rule, footer, .btn { display: none !important; }
+    .wrap { max-width: none; padding: 0; }
+    .hero { padding: 0 0 10px; }
+    h1 { font-size: 24pt; }
+    main { padding: 0; }
+    .part { margin-bottom: 18px; }
+    .part-head { break-after: avoid; }
+    .q { box-shadow: none; border-color: #ccc; padding: 8px 10px; margin-top: 8px; }
+    .q-text { font-size: 11pt; margin-bottom: 6px; }
+    .opt { border: none; padding: 1px 2px; font-size: 10.5pt; }
+    .opt .letter { background: none; width: 16px; height: 16px; }
+    .answer-line { display: none !important; }
+    .key { display: block !important; border: none; padding: 0; break-before: page; }
+    .key-grid { grid-template-columns: repeat(10, 1fr); }
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Bible Lesson Quiz · 100 Questions</div>
+    <h1>聖經問答 <span class="thin">100 題</span></h1>
+    <p class="sub">四選一 · 題目全部出自課本 8 頁精選內容 · 範圍：<b>萬物見證神</b>、<b>慈愛和公義的神</b>、<b>信實的神</b>、<b>約瑟轉禍為福</b>、<b>雅各生命改變</b></p>
+    <div class="hero-rule"></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap toolbar-inner">
+    <div class="meter">
+      <span>進度</span>
+      <div class="track" aria-hidden="true"><div class="fill" id="fill"></div></div>
+      <span class="score"><b id="answered">0</b> / 100</span>
+    </div>
+    <div class="meter"><span>答對</span><span class="score"><b id="score">0</b> 題</span></div>
+    <div class="spacer"></div>
+    <div class="btn-group">
+      <button class="btn" id="reveal" type="button">顯示答案</button>
+      <button class="btn" id="reset" type="button">重新開始</button>
+      <button class="btn primary" id="print" type="button">列印</button>
+    </div>
+  </div>
+  <div class="wrap filters">
+    <button class="chip active" type="button" data-filter="all">全部</button>
+    <button class="chip" type="button" data-filter="part1">01　萬物見證神</button>
+    <button class="chip" type="button" data-filter="part2">02　慈愛和公義的神</button>
+    <button class="chip" type="button" data-filter="part3">03　信實的神</button>
+    <button class="chip" type="button" data-filter="part4">04　約瑟轉禍為福</button>
+    <button class="chip" type="button" data-filter="part5">05　雅各生命改變</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="part" id="part1" data-part="1 ">
+    <div class="part-head">
+      <span class="part-no">PART 01</span>
+      <h2>萬物見證神</h2>
+      <span class="part-range">第 1–20 題</span>
+    </div>
+    <article class="q" id="q1" data-n="1" data-answer="A">
+      <h3 class="q-text"><span class="q-num">1</span><span>創世記一章1節告訴我們甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：「起初，神創造天地。」"><span class="letter">A</span><span class="txt">「起初，神創造天地。」</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：「神愛世人，甚至將祂的獨生子賜給他們。」"><span class="letter">B</span><span class="txt">「神愛世人，甚至將祂的獨生子賜給他們。」</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：「耶和華是我的牧者，我必不致缺乏。」"><span class="letter">C</span><span class="txt">「耶和華是我的牧者，我必不致缺乏。」</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：「起初，神造了方舟與彩虹。」"><span class="letter">D</span><span class="txt">「起初，神造了方舟與彩虹。」</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文引用創世記一章1節：「起初，神創造天地。」</p>
+    </article>
+    <article class="q" id="q2" data-n="2" data-answer="C">
+      <h3 class="q-text"><span class="q-num">2</span><span>課文提到是誰令毛蟲變成蝴蝶、土地長出植物、鋪排浩瀚無盡的宇宙？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：大自然自行演變"><span class="letter">A</span><span class="txt">大自然自行演變</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：人類的科學家"><span class="letter">B</span><span class="txt">人類的科學家</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：天父（神）"><span class="letter">C</span><span class="txt">天父（神）</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：天使長"><span class="letter">D</span><span class="txt">天使長</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>C</strong> · 課文指出萬物井然有序，都是天父智慧與大能的創造。</p>
+    </article>
+    <article class="q" id="q3" data-n="3" data-answer="B">
+      <h3 class="q-text"><span class="q-num">3</span><span>課文指出春夏秋冬、日出、日落有甚麼特點？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：毫無規律，隨機發生"><span class="letter">A</span><span class="txt">毫無規律，隨機發生</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：甚有規律，井然而序"><span class="letter">B</span><span class="txt">甚有規律，井然而序</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：由人類作息決定"><span class="letter">C</span><span class="txt">由人類作息決定</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：經常互相混亂"><span class="letter">D</span><span class="txt">經常互相混亂</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「還有春夏秋冬、日出、日落，一切都甚有規律，井然而序！」</p>
+    </article>
+    <article class="q" id="q4" data-n="4" data-answer="A">
+      <h3 class="q-text"><span class="q-num">4</span><span>課文提到四周哪些景物「皆美麗壯觀」？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：高山、深谷、冰川、海洋"><span class="letter">A</span><span class="txt">高山、深谷、冰川、海洋</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：高樓大廈、公路、橋樑"><span class="letter">B</span><span class="txt">高樓大廈、公路、橋樑</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：工廠、煙囪、輪船"><span class="letter">C</span><span class="txt">工廠、煙囪、輪船</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：市場、店舖、街道"><span class="letter">D</span><span class="txt">市場、店舖、街道</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文原文：「細心欣賞四周的景物，無論是高山、深谷、冰川、海洋，皆美麗壯觀！」</p>
+    </article>
+    <article class="q" id="q5" data-n="5" data-answer="A">
+      <h3 class="q-text"><span class="q-num">5</span><span>根據課文，貓擁有甚麼特質？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：會捉老鼠"><span class="letter">A</span><span class="txt">會捉老鼠</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：會守門戶"><span class="letter">B</span><span class="txt">會守門戶</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：會釀蜜糖"><span class="letter">C</span><span class="txt">會釀蜜糖</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：會變蝴蝶"><span class="letter">D</span><span class="txt">會變蝴蝶</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文指出生物各有不同特質，其中「貓會捉老鼠」。</p>
+    </article>
+    <article class="q" id="q6" data-n="6" data-answer="B">
+      <h3 class="q-text"><span class="q-num">6</span><span>根據課文，狗擁有甚麼特質？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：會捉老鼠"><span class="letter">A</span><span class="txt">會捉老鼠</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：會守門戶"><span class="letter">B</span><span class="txt">會守門戶</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：會釀蜜糖"><span class="letter">C</span><span class="txt">會釀蜜糖</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：會造方舟"><span class="letter">D</span><span class="txt">會造方舟</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出「狗會守門戶」。</p>
+    </article>
+    <article class="q" id="q7" data-n="7" data-answer="C">
+      <h3 class="q-text"><span class="q-num">7</span><span>根據課文，蜜蜂會做甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：會捉老鼠"><span class="letter">A</span><span class="txt">會捉老鼠</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：會守門戶"><span class="letter">B</span><span class="txt">會守門戶</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：會釀蜜糖"><span class="letter">C</span><span class="txt">會釀蜜糖</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：會織毛衣"><span class="letter">D</span><span class="txt">會織毛衣</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>C</strong> · 課文指出「蜜蜂會釀蜜糖」。</p>
+    </article>
+    <article class="q" id="q8" data-n="8" data-answer="B">
+      <h3 class="q-text"><span class="q-num">8</span><span>課文指出人類擁有甚麼特質？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：能像蝴蝶一樣飛翔"><span class="letter">A</span><span class="txt">能像蝴蝶一樣飛翔</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：擁有複雜而奇特的身體結構"><span class="letter">B</span><span class="txt">擁有複雜而奇特的身體結構</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：天生具備四隻眼睛"><span class="letter">C</span><span class="txt">天生具備四隻眼睛</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：不需要睡眠與飲食"><span class="letter">D</span><span class="txt">不需要睡眠與飲食</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「人類更擁有複雜而奇特的身體結構」。</p>
+    </article>
+    <article class="q" id="q9" data-n="9" data-answer="A">
+      <h3 class="q-text"><span class="q-num">9</span><span>天父每一個奇妙的創造，見證了祂的甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：智慧和大能"><span class="letter">A</span><span class="txt">智慧和大能</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：嚴厲與忿怒"><span class="letter">B</span><span class="txt">嚴厲與忿怒</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：時間與金錢"><span class="letter">C</span><span class="txt">時間與金錢</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：冷漠與遠離"><span class="letter">D</span><span class="txt">冷漠與遠離</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文指出祂的每一個創造都叫人驚歎，「更見證了祂的智慧和大能」。</p>
+    </article>
+    <article class="q" id="q10" data-n="10" data-answer="B">
+      <h3 class="q-text"><span class="q-num">10</span><span>天父創造了美麗的地球後，把甚麼責任交給人？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：任意開採資源的責任"><span class="letter">A</span><span class="txt">任意開採資源的責任</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：管理世界的責任"><span class="letter">B</span><span class="txt">管理世界的責任</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：興建高樓的責任"><span class="letter">C</span><span class="txt">興建高樓的責任</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：懲罰動物的責任"><span class="letter">D</span><span class="txt">懲罰動物的責任</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出天父「把管理世界的責任交給人」。</p>
+    </article>
+    <article class="q" id="q11" data-n="11" data-answer="B">
+      <h3 class="q-text"><span class="q-num">11</span><span>我們應該存甚麼樣的心去欣賞大自然的美？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：驕傲自大的心"><span class="letter">A</span><span class="txt">驕傲自大的心</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：感恩的心"><span class="letter">B</span><span class="txt">感恩的心</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：懷疑的心"><span class="letter">C</span><span class="txt">懷疑的心</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：貪婪的心"><span class="letter">D</span><span class="txt">貪婪的心</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文提到「我們要存感恩的心欣賞大自然的美」。</p>
+    </article>
+    <article class="q" id="q12" data-n="12" data-answer="A">
+      <h3 class="q-text"><span class="q-num">12</span><span>面對大自然環境，課文提醒我們要怎樣做？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：愛護環境，珍惜眼前的一草一木"><span class="letter">A</span><span class="txt">愛護環境，珍惜眼前的一草一木</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：盡情砍伐樹木"><span class="letter">B</span><span class="txt">盡情砍伐樹木</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：隨意捕捉野生動物"><span class="letter">C</span><span class="txt">隨意捕捉野生動物</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：只要顧好自己生活"><span class="letter">D</span><span class="txt">只要顧好自己生活</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文原文：「更要愛護環境，珍惜眼前的一草一木」。</p>
+    </article>
+    <article class="q" id="q13" data-n="13" data-answer="C">
+      <h3 class="q-text"><span class="q-num">13</span><span>課文指出大自然和美麗的地球是來自天父的甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：試驗的陷阱"><span class="letter">A</span><span class="txt">試驗的陷阱</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：買賣的商品"><span class="letter">B</span><span class="txt">買賣的商品</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：寶貴禮物"><span class="letter">C</span><span class="txt">寶貴禮物</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：嚴厲的考驗"><span class="letter">D</span><span class="txt">嚴厲的考驗</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>C</strong> · 課文提到要「用心守護這份來自天父的寶貴禮物」。</p>
+    </article>
+    <article class="q" id="q14" data-n="14" data-answer="A">
+      <h3 class="q-text"><span class="q-num">14</span><span>我們看到的奇妙世界，是誰創造的？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：天父"><span class="letter">A</span><span class="txt">天父</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：天使"><span class="letter">B</span><span class="txt">天使</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：法老"><span class="letter">C</span><span class="txt">法老</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：摩西"><span class="letter">D</span><span class="txt">摩西</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文開宗明義：「我們看到的奇妙世界，就是天父創造的。」</p>
+    </article>
+    <article class="q" id="q15" data-n="15" data-answer="A">
+      <h3 class="q-text"><span class="q-num">15</span><span>課文第一課的標題是甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：萬物見證神"><span class="letter">A</span><span class="txt">萬物見證神</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：信實的神"><span class="letter">B</span><span class="txt">信實的神</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：慈愛和公義的神"><span class="letter">C</span><span class="txt">慈愛和公義的神</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：約瑟轉禍為福"><span class="letter">D</span><span class="txt">約瑟轉禍為福</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 第一課標題為「1 萬物見證神」。</p>
+    </article>
+    <article class="q" id="q16" data-n="16" data-answer="B">
+      <h3 class="q-text"><span class="q-num">16</span><span>看到天父奇妙的創造時，課文說人的反應是甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：感到恐懼害怕"><span class="letter">A</span><span class="txt">感到恐懼害怕</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：叫人驚歎"><span class="letter">B</span><span class="txt">叫人驚歎</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：覺得索然無味"><span class="letter">C</span><span class="txt">覺得索然無味</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：充滿懷疑"><span class="letter">D</span><span class="txt">充滿懷疑</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文提到「祂的每一個創造都叫人驚歎」。</p>
+    </article>
+    <article class="q" id="q17" data-n="17" data-answer="B">
+      <h3 class="q-text"><span class="q-num">17</span><span>課文提到毛蟲最終會變成甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：蜜蜂"><span class="letter">A</span><span class="txt">蜜蜂</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：蝴蝶"><span class="letter">B</span><span class="txt">蝴蝶</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：甲蟲"><span class="letter">C</span><span class="txt">甲蟲</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：飛鳥"><span class="letter">D</span><span class="txt">飛鳥</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文問：「是誰令毛蟲變成蝴蝶，土地長出植物...」</p>
+    </article>
+    <article class="q" id="q18" data-n="18" data-answer="A">
+      <h3 class="q-text"><span class="q-num">18</span><span>課文問「是誰令土地長出甚麼」？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：植物"><span class="letter">A</span><span class="txt">植物</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：金銀"><span class="letter">B</span><span class="txt">金銀</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：房屋"><span class="letter">C</span><span class="txt">房屋</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：石頭"><span class="letter">D</span><span class="txt">石頭</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文問：「是誰令毛蟲變成蝴蝶，土地長出植物...」</p>
+    </article>
+    <article class="q" id="q19" data-n="19" data-answer="B">
+      <h3 class="q-text"><span class="q-num">19</span><span>課文提到神鋪排了甚麼樣的宇宙？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：狹小封閉的宇宙"><span class="letter">A</span><span class="txt">狹小封閉的宇宙</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：浩瀚無盡的宇宙"><span class="letter">B</span><span class="txt">浩瀚無盡的宇宙</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：虛幻無常的宇宙"><span class="letter">C</span><span class="txt">虛幻無常的宇宙</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：漆黑冰冷的宇宙"><span class="letter">D</span><span class="txt">漆黑冰冷的宇宙</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「鋪排浩瀚無盡的宇宙」。</p>
+    </article>
+    <article class="q" id="q20" data-n="20" data-answer="A">
+      <h3 class="q-text"><span class="q-num">20</span><span>我們要「用心守護」這份寶貴禮物，下列哪項做法符合課文宗旨？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：愛護環境，珍惜一草一木"><span class="letter">A</span><span class="txt">愛護環境，珍惜一草一木</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：任意破壞自然生態"><span class="letter">B</span><span class="txt">任意破壞自然生態</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：浪費水源與土地資源"><span class="letter">C</span><span class="txt">浪費水源與土地資源</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：捕捉鳥獸以賺取金錢"><span class="letter">D</span><span class="txt">捕捉鳥獸以賺取金錢</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 守護天父禮物就是存感恩心愛護環境、珍惜眼前的一草一木。</p>
+    </article>
+  </section>
+  <section class="part" id="part2" data-part="2 ">
+    <div class="part-head">
+      <span class="part-no">PART 02</span>
+      <h2>慈愛和公義的神</h2>
+      <span class="part-range">第 21–40 題</span>
+    </div>
+    <article class="q" id="q21" data-n="21" data-answer="B">
+      <h3 class="q-text"><span class="q-num">21</span><span>課文指出，我們的神既有甚麼特質？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：既嚴厲又冷漠"><span class="letter">A</span><span class="txt">既嚴厲又冷漠</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：既慈愛又公義"><span class="letter">B</span><span class="txt">既慈愛又公義</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：既孤獨又神秘"><span class="letter">C</span><span class="txt">既孤獨又神秘</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：既軟弱又多變"><span class="letter">D</span><span class="txt">既軟弱又多變</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 第二課標題與內文強調：「我們的神既慈愛又公義」。</p>
+    </article>
+    <article class="q" id="q22" data-n="22" data-answer="C">
+      <h3 class="q-text"><span class="q-num">22</span><span>神愛我們，但同時會按各人的甚麼來施行審判？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：外貌與長相"><span class="letter">A</span><span class="txt">外貌與長相</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：財富與名利"><span class="letter">B</span><span class="txt">財富與名利</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：行為"><span class="letter">C</span><span class="txt">行為</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：說話的聲音"><span class="letter">D</span><span class="txt">說話的聲音</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>C</strong> · 課文指出：「祂愛我們，同時會按各人的行為施行審判。」</p>
+    </article>
+    <article class="q" id="q23" data-n="23" data-answer="A">
+      <h3 class="q-text"><span class="q-num">23</span><span>亞當和夏娃原本生活在哪裡？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：伊甸園"><span class="letter">A</span><span class="txt">伊甸園</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：埃及地"><span class="letter">B</span><span class="txt">埃及地</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：迦南地"><span class="letter">C</span><span class="txt">迦南地</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：巴比倫"><span class="letter">D</span><span class="txt">巴比倫</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文提到：「他們在伊甸園生活」。</p>
+    </article>
+    <article class="q" id="q24" data-n="24" data-answer="B">
+      <h3 class="q-text"><span class="q-num">24</span><span>在伊甸園中，神吩咐亞當和夏娃不可吃甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：生命樹上的果子"><span class="letter">A</span><span class="txt">生命樹上的果子</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：分別善惡樹上的果子"><span class="letter">B</span><span class="txt">分別善惡樹上的果子</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：無花果樹上的果子"><span class="letter">C</span><span class="txt">無花果樹上的果子</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：橄欖樹上的果子"><span class="letter">D</span><span class="txt">橄欖樹上的果子</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出：「神吩咐他們不可吃分別善惡樹上的果子」。</p>
+    </article>
+    <article class="q" id="q25" data-n="25" data-answer="B">
+      <h3 class="q-text"><span class="q-num">25</span><span>亞當和夏娃做了甚麼違背神命令的事？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：建造巴別塔"><span class="letter">A</span><span class="txt">建造巴別塔</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：吃了分別善惡樹上的果子"><span class="letter">B</span><span class="txt">吃了分別善惡樹上的果子</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：擅自離開伊甸園"><span class="letter">C</span><span class="txt">擅自離開伊甸園</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：互相打架鬥毆"><span class="letter">D</span><span class="txt">互相打架鬥毆</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「但他們違背神的命令，吃了那樹上的果子。」</p>
+    </article>
+    <article class="q" id="q26" data-n="26" data-answer="B">
+      <h3 class="q-text"><span class="q-num">26</span><span>亞當和夏娃違背神的命令後，最終受到甚麼懲罰？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：立刻被處死"><span class="letter">A</span><span class="txt">立刻被處死</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：被神逐出伊甸園"><span class="letter">B</span><span class="txt">被神逐出伊甸園</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：變成啞巴"><span class="letter">C</span><span class="txt">變成啞巴</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：大腿變瘸"><span class="letter">D</span><span class="txt">大腿變瘸</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「兩人最終受罰，被神逐出伊甸園。」</p>
+    </article>
+    <article class="q" id="q27" data-n="27" data-answer="B">
+      <h3 class="q-text"><span class="q-num">27</span><span>挪亞年代，人們的行為怎樣？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：安分守己，彼此相愛"><span class="letter">A</span><span class="txt">安分守己，彼此相愛</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：犯罪纍纍，惡貫滿盈"><span class="letter">B</span><span class="txt">犯罪纍纍，惡貫滿盈</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：熱心研讀經卷"><span class="letter">C</span><span class="txt">熱心研讀經卷</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：積極建立和平社會"><span class="letter">D</span><span class="txt">積極建立和平社會</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出挪亞年代「人們犯罪纍纍，惡貫滿盈」。</p>
+    </article>
+    <article class="q" id="q28" data-n="28" data-answer="B">
+      <h3 class="q-text"><span class="q-num">28</span><span>因為挪亞時代的人惡貫滿盈，神痛心地降下甚麼來毀滅一切？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：烈火"><span class="letter">A</span><span class="txt">烈火</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：大雨"><span class="letter">B</span><span class="txt">大雨</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：蝗災"><span class="letter">C</span><span class="txt">蝗災</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：瘟疫"><span class="letter">D</span><span class="txt">瘟疫</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「神痛心地降下大雨來毀滅一切。」</p>
+    </article>
+    <article class="q" id="q29" data-n="29" data-answer="A">
+      <h3 class="q-text"><span class="q-num">29</span><span>神在懲罰罪行的同時，也會賜下甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：憐憫"><span class="letter">A</span><span class="txt">憐憫</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：金錢"><span class="letter">B</span><span class="txt">金錢</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：憤怒"><span class="letter">C</span><span class="txt">憤怒</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：絕望"><span class="letter">D</span><span class="txt">絕望</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文指出：「然而神是慈愛的，祂在懲罰罪行的同時，也會賜下憐憫。」</p>
+    </article>
+    <article class="q" id="q30" data-n="30" data-answer="B">
+      <h3 class="q-text"><span class="q-num">30</span><span>亞當和夏娃犯罪後，神主動尋找他們，並用甚麼做衣服給他們穿？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：樹葉"><span class="letter">A</span><span class="txt">樹葉</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：皮（獸皮）"><span class="letter">B</span><span class="txt">皮（獸皮）</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：麻布"><span class="letter">C</span><span class="txt">麻布</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：羊毛織物"><span class="letter">D</span><span class="txt">羊毛織物</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「神主動尋找亞當和夏娃，用皮做衣服給他們穿。」</p>
+    </article>
+    <article class="q" id="q31" data-n="31" data-answer="B">
+      <h3 class="q-text"><span class="q-num">31</span><span>在洪水來臨前，神吩咐挪亞做甚麼以保存一家人？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：逃到高山上"><span class="letter">A</span><span class="txt">逃到高山上</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：造方舟"><span class="letter">B</span><span class="txt">造方舟</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：挖掘地洞避難"><span class="letter">C</span><span class="txt">挖掘地洞避難</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：建造石頭城城堡"><span class="letter">D</span><span class="txt">建造石頭城城堡</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出神「在洪水來臨前，吩咐挪亞造方舟，保存了挪亞一家」。</p>
+    </article>
+    <article class="q" id="q32" data-n="32" data-answer="A">
+      <h3 class="q-text"><span class="q-num">32</span><span>大洪水過後，神用甚麼記號與人重新立約，為人類預備救恩？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：彩虹"><span class="letter">A</span><span class="txt">彩虹</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：白鴿"><span class="letter">B</span><span class="txt">白鴿</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：石碑"><span class="letter">C</span><span class="txt">石碑</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：太陽"><span class="letter">D</span><span class="txt">太陽</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文提到神「更在洪水過後以彩虹與人重新立約，為人類預備救恩」。</p>
+    </article>
+    <article class="q" id="q33" data-n="33" data-answer="B">
+      <h3 class="q-text"><span class="q-num">33</span><span>課文指出神知道我們怎樣，因此經常犯錯？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：邪惡殘忍"><span class="letter">A</span><span class="txt">邪惡殘忍</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：軟弱"><span class="letter">B</span><span class="txt">軟弱</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：驕傲自滿"><span class="letter">C</span><span class="txt">驕傲自滿</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：愚笨無知"><span class="letter">D</span><span class="txt">愚笨無知</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「神知道我們軟弱，經常犯錯，但祂仍愛我們」。</p>
+    </article>
+    <article class="q" id="q34" data-n="34" data-answer="B">
+      <h3 class="q-text"><span class="q-num">34</span><span>神雖然會懲罰罪惡，但祂仍樂意寬恕怎樣的人？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：有權有勢的人"><span class="letter">A</span><span class="txt">有權有勢的人</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：悔改的人"><span class="letter">B</span><span class="txt">悔改的人</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：富有的人"><span class="letter">C</span><span class="txt">富有的人</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：從不祈禱的人"><span class="letter">D</span><span class="txt">從不祈禱的人</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出神「樂意寬恕悔改的人」。</p>
+    </article>
+    <article class="q" id="q35" data-n="35" data-answer="A">
+      <h3 class="q-text"><span class="q-num">35</span><span>神的「公義」提醒我們在日常生活中應當怎樣做？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：遵守祂的誡命，做個正直人，公平地對待別人"><span class="letter">A</span><span class="txt">遵守祂的誡命，做個正直人，公平地對待別人</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：只要自己不吃虧就好"><span class="letter">B</span><span class="txt">只要自己不吃虧就好</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：嚴格審判並指責別人的過失"><span class="letter">C</span><span class="txt">嚴格審判並指責別人的過失</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：不需在乎道德規範"><span class="letter">D</span><span class="txt">不需在乎道德規範</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文原文：「神的公義提醒我們要遵守祂的誡命，做個正直人，公平地對待別人」。</p>
+    </article>
+    <article class="q" id="q36" data-n="36" data-answer="B">
+      <h3 class="q-text"><span class="q-num">36</span><span>神的「慈愛」讓我們明白甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：自己是軟弱無能一文不值的"><span class="letter">A</span><span class="txt">自己是軟弱無能一文不值的</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：自己是寶貴的，神接納和愛護我們"><span class="letter">B</span><span class="txt">自己是寶貴的，神接納和愛護我們</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：可以隨便犯罪不用受罰"><span class="letter">C</span><span class="txt">可以隨便犯罪不用受罰</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：世界是由運氣決定的"><span class="letter">D</span><span class="txt">世界是由運氣決定的</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「神的慈愛讓我們明白自己是寶貴的，神接納和愛護我們」。</p>
+    </article>
+    <article class="q" id="q37" data-n="37" data-answer="A">
+      <h3 class="q-text"><span class="q-num">37</span><span>因為體會到神的慈愛，課文鼓勵我們要學習怎樣對待別人？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：以慈愛待人"><span class="letter">A</span><span class="txt">以慈愛待人</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：用冷漠態度對待別人"><span class="letter">B</span><span class="txt">用冷漠態度對待別人</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：用嚴格規條約束別人"><span class="letter">C</span><span class="txt">用嚴格規條約束別人</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：只對對自己有好處的人好"><span class="letter">D</span><span class="txt">只對對自己有好處的人好</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文總結：「神接納和愛護我們，我們也要學習以慈愛待人。」</p>
+    </article>
+    <article class="q" id="q38" data-n="38" data-answer="B">
+      <h3 class="q-text"><span class="q-num">38</span><span>亞當和夏娃犯罪後，是誰「主動尋找」他們？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：天使"><span class="letter">A</span><span class="txt">天使</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：神"><span class="letter">B</span><span class="txt">神</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：挪亞"><span class="letter">C</span><span class="txt">挪亞</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：以掃"><span class="letter">D</span><span class="txt">以掃</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「神主動尋找亞當和夏娃，用皮做衣服給他們穿。」</p>
+    </article>
+    <article class="q" id="q39" data-n="39" data-answer="A">
+      <h3 class="q-text"><span class="q-num">39</span><span>挪亞造方舟這件事，保存了誰的生命？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：挪亞一家"><span class="letter">A</span><span class="txt">挪亞一家</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：全城所有人"><span class="letter">B</span><span class="txt">全城所有人</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：只有挪亞一人"><span class="letter">C</span><span class="txt">只有挪亞一人</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：法老全家"><span class="letter">D</span><span class="txt">法老全家</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文明確寫道：「保存了挪亞一家」。</p>
+    </article>
+    <article class="q" id="q40" data-n="40" data-answer="A">
+      <h3 class="q-text"><span class="q-num">40</span><span>在神與人以彩虹重新立約的事上，顯明神為人類預備了甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：救恩"><span class="letter">A</span><span class="txt">救恩</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：嚴刑峻法"><span class="letter">B</span><span class="txt">嚴刑峻法</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：更多的考驗"><span class="letter">C</span><span class="txt">更多的考驗</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：無盡的災難"><span class="letter">D</span><span class="txt">無盡的災難</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文原文：「更在洪水過後以彩虹與人重新立約，為人類預備救恩。」</p>
+    </article>
+  </section>
+  <section class="part" id="part3" data-part="3 ">
+    <div class="part-head">
+      <span class="part-no">PART 03</span>
+      <h2>信實的神</h2>
+      <span class="part-range">第 41–60 題</span>
+    </div>
+    <article class="q" id="q41" data-n="41" data-answer="B">
+      <h3 class="q-text"><span class="q-num">41</span><span>第3課開頭介紹哪一位著名宣教士的經歷？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：馬禮遜"><span class="letter">A</span><span class="txt">馬禮遜</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：戴德生"><span class="letter">B</span><span class="txt">戴德生</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：利瑪竇"><span class="letter">C</span><span class="txt">利瑪竇</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：李愛銳"><span class="letter">D</span><span class="txt">李愛銳</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文開頭介紹著名宣教士「戴德生第一次從英國乘船到中國途中」的經歷。</p>
+    </article>
+    <article class="q" id="q42" data-n="42" data-answer="A">
+      <h3 class="q-text"><span class="q-num">42</span><span>戴德生第一次乘船是從哪裡出發，要前往哪裡？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：從英國乘船到中國"><span class="letter">A</span><span class="txt">從英國乘船到中國</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：從中國乘船到英國"><span class="letter">B</span><span class="txt">從中國乘船到英國</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：從埃及乘船到以色列"><span class="letter">C</span><span class="txt">從埃及乘船到以色列</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：從印尼乘船到英國"><span class="letter">D</span><span class="txt">從印尼乘船到英國</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文第一句：「著名宣教士戴德生第一次從英國乘船到中國途中」。</p>
+    </article>
+    <article class="q" id="q43" data-n="43" data-answer="A">
+      <h3 class="q-text"><span class="q-num">43</span><span>戴德生在航海危難中經歷了天父的甚麼特質？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：信實"><span class="letter">A</span><span class="txt">信實</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：憤怒"><span class="letter">B</span><span class="txt">憤怒</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：嚴苛"><span class="letter">C</span><span class="txt">嚴苛</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：無奈"><span class="letter">D</span><span class="txt">無奈</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 第3課主題為「信實的神」，內文提到戴德生「經歷了天父的信實」。</p>
+    </article>
+    <article class="q" id="q44" data-n="44" data-answer="B">
+      <h3 class="q-text"><span class="q-num">44</span><span>戴德生那個時代的船主要是靠甚麼行駛？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：蒸氣發動機"><span class="letter">A</span><span class="txt">蒸氣發動機</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：風力（靠風行駛）"><span class="letter">B</span><span class="txt">風力（靠風行駛）</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：核能推動"><span class="letter">C</span><span class="txt">核能推動</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：柴油引擎"><span class="letter">D</span><span class="txt">柴油引擎</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出：「那時代的船是靠風行駛」。</p>
+    </article>
+    <article class="q" id="q45" data-n="45" data-answer="A">
+      <h3 class="q-text"><span class="q-num">45</span><span>當戴德生乘坐的船到達哪個海域附近時，風突然止住了？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：印尼附近海域"><span class="letter">A</span><span class="txt">印尼附近海域</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：紅海附近海域"><span class="letter">B</span><span class="txt">紅海附近海域</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：地中海附近海域"><span class="letter">C</span><span class="txt">地中海附近海域</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：台灣海峽"><span class="letter">D</span><span class="txt">台灣海峽</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文指出：「當他們到達印尼附近海域，風止住了。」</p>
+    </article>
+    <article class="q" id="q46" data-n="46" data-answer="B">
+      <h3 class="q-text"><span class="q-num">46</span><span>風一停之後，船發生了甚麼危險的情況？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：船底破裂漏水"><span class="letter">A</span><span class="txt">船底破裂漏水</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：水流把船沖走，船不受控制，眼看快要觸礁"><span class="letter">B</span><span class="txt">水流把船沖走，船不受控制，眼看快要觸礁</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：海盜登船襲擊"><span class="letter">C</span><span class="txt">海盜登船襲擊</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：船上糧食耗盡"><span class="letter">D</span><span class="txt">船上糧食耗盡</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「風一停，水流就把船沖走，船不受控制，眼看快要觸礁，船長十分擔心。」</p>
+    </article>
+    <article class="q" id="q47" data-n="47" data-answer="B">
+      <h3 class="q-text"><span class="q-num">47</span><span>當時船上一共有幾名基督徒？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：兩名"><span class="letter">A</span><span class="txt">兩名</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：四名"><span class="letter">B</span><span class="txt">四名</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：七名"><span class="letter">C</span><span class="txt">七名</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：十二名"><span class="letter">D</span><span class="txt">十二名</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「當時船上有四名基督徒」。</p>
+    </article>
+    <article class="q" id="q48" data-n="48" data-answer="B">
+      <h3 class="q-text"><span class="q-num">48</span><span>面對觸礁危險，戴德生請大家做甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：棄船跳水逃生"><span class="letter">A</span><span class="txt">棄船跳水逃生</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：同心祈禱，求主賜下風來吹動船"><span class="letter">B</span><span class="txt">同心祈禱，求主賜下風來吹動船</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：各自收拾貴重行李"><span class="letter">C</span><span class="txt">各自收拾貴重行李</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：大聲責備船長"><span class="letter">D</span><span class="txt">大聲責備船長</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文提到：「戴德生請大家同心祈禱，求主賜下風來吹動船。」</p>
+    </article>
+    <article class="q" id="q49" data-n="49" data-answer="B">
+      <h3 class="q-text"><span class="q-num">49</span><span>禱告後不久，船長聽到有人大叫甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：「觸礁了！」"><span class="letter">A</span><span class="txt">「觸礁了！」</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：「風來了！」"><span class="letter">B</span><span class="txt">「風來了！」</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：「看到陸地了！」"><span class="letter">C</span><span class="txt">「看到陸地了！」</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：「快划船！」"><span class="letter">D</span><span class="txt">「快划船！」</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文記載：「禱告後不久，船長聽到有人大叫：『風來了！』」</p>
+    </article>
+    <article class="q" id="q50" data-n="50" data-answer="A">
+      <h3 class="q-text"><span class="q-num">50</span><span>禱告後風來了，船在幾分鐘內發生了甚麼變化？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：以高速破浪前進，抵達安全的地方"><span class="letter">A</span><span class="txt">以高速破浪前進，抵達安全的地方</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：船隻翻沉"><span class="letter">B</span><span class="txt">船隻翻沉</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：風向相反被吹回原點"><span class="letter">C</span><span class="txt">風向相反被吹回原點</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：船停在原地不動"><span class="letter">D</span><span class="txt">船停在原地不動</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文原文：「不到幾分鐘，船以高速破浪前進，抵達安全的地方。神聽了他們的禱告！」</p>
+    </article>
+    <article class="q" id="q51" data-n="51" data-answer="A">
+      <h3 class="q-text"><span class="q-num">51</span><span>課文指出神是信實可靠的，祂怎樣？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：永不失信"><span class="letter">A</span><span class="txt">永不失信</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：偶爾忘記諾言"><span class="letter">B</span><span class="txt">偶爾忘記諾言</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：只聽有錢人禱告"><span class="letter">C</span><span class="txt">只聽有錢人禱告</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：需要人獻祭才聽禱告"><span class="letter">D</span><span class="txt">需要人獻祭才聽禱告</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文寫道：「神是信實可靠的，祂永不失信。」</p>
+    </article>
+    <article class="q" id="q52" data-n="52" data-answer="B">
+      <h3 class="q-text"><span class="q-num">52</span><span>舊約中哪位先知曾與巴力先知作「真假神」對決？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：以利沙"><span class="letter">A</span><span class="txt">以利沙</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：以利亞"><span class="letter">B</span><span class="txt">以利亞</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：但以理"><span class="letter">C</span><span class="txt">但以理</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：以賽亞"><span class="letter">D</span><span class="txt">以賽亞</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文記載：「以利亞曾與四百五十名巴力先知作『真假神』對決」。</p>
+    </article>
+    <article class="q" id="q53" data-n="53" data-answer="B">
+      <h3 class="q-text"><span class="q-num">53</span><span>與以利亞對決的巴力先知一共有多少名？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：400名"><span class="letter">A</span><span class="txt">400名</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：450名"><span class="letter">B</span><span class="txt">450名</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：500名"><span class="letter">C</span><span class="txt">500名</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：300名"><span class="letter">D</span><span class="txt">300名</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文明確標明：「四百五十名巴力先知」。</p>
+    </article>
+    <article class="q" id="q54" data-n="54" data-answer="B">
+      <h3 class="q-text"><span class="q-num">54</span><span>在「真假神」對決中，雙方的祭壇一開始處於甚麼狀態？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：都點燃了大火"><span class="letter">A</span><span class="txt">都點燃了大火</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：雙方的祭壇上都沒有點火"><span class="letter">B</span><span class="txt">雙方的祭壇上都沒有點火</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：都倒滿了香油"><span class="letter">C</span><span class="txt">都倒滿了香油</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：都用石頭封住"><span class="letter">D</span><span class="txt">都用石頭封住</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出：「雙方的祭壇上都沒有點火，要各自呼求自己的神降火燒柴。」</p>
+    </article>
+    <article class="q" id="q55" data-n="55" data-answer="B">
+      <h3 class="q-text"><span class="q-num">55</span><span>對決時雙方要各自呼求自己的神做甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：降大雨熄滅祭壇"><span class="letter">A</span><span class="txt">降大雨熄滅祭壇</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：降火燒柴"><span class="letter">B</span><span class="txt">降火燒柴</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：使大地震動"><span class="letter">C</span><span class="txt">使大地震動</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：召喚天兵天使"><span class="letter">D</span><span class="txt">召喚天兵天使</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「要各自呼求自己的神降火燒柴。」</p>
+    </article>
+    <article class="q" id="q56" data-n="56" data-answer="B">
+      <h3 class="q-text"><span class="q-num">56</span><span>巴力先知人多勢眾，聲嘶力竭地呼叫，結果如何？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：天上立刻降下烈火"><span class="letter">A</span><span class="txt">天上立刻降下烈火</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：沒有果效"><span class="letter">B</span><span class="txt">沒有果效</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：祭壇自動燃燒"><span class="letter">C</span><span class="txt">祭壇自動燃燒</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：以利亞當場認輸"><span class="letter">D</span><span class="txt">以利亞當場認輸</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「巴力先知雖然人多勢眾，聲嘶力竭地呼叫，卻沒有果效。」</p>
+    </article>
+    <article class="q" id="q57" data-n="57" data-answer="A">
+      <h3 class="q-text"><span class="q-num">57</span><span>輪到以利亞時，他在祭壇周圍做了甚麼令人意想不到的舉動？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：挖了一條溝，注滿水"><span class="letter">A</span><span class="txt">挖了一條溝，注滿水</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：堆放更多乾燥的木柴"><span class="letter">B</span><span class="txt">堆放更多乾燥的木柴</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：向巴力先知鞠躬致敬"><span class="letter">C</span><span class="txt">向巴力先知鞠躬致敬</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：叫群眾四散逃跑"><span class="letter">D</span><span class="txt">叫群眾四散逃跑</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文記載：「輪到以利亞，他在祭壇周圍挖了一條溝，注滿水，然後求神燃點祭壇」。</p>
+    </article>
+    <article class="q" id="q58" data-n="58" data-answer="B">
+      <h3 class="q-text"><span class="q-num">58</span><span>以利亞求神燃點祭壇後，神怎樣回應他的禱告？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：沒有任何動靜"><span class="letter">A</span><span class="txt">沒有任何動靜</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：果然降下火來燒盡祭物"><span class="letter">B</span><span class="txt">果然降下火來燒盡祭物</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：降下傾盆大雨"><span class="letter">C</span><span class="txt">降下傾盆大雨</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：颳起狂風吹倒祭壇"><span class="letter">D</span><span class="txt">颳起狂風吹倒祭壇</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文記載：「神果然降下火來燒盡祭物」。</p>
+    </article>
+    <article class="q" id="q59" data-n="59" data-answer="B">
+      <h3 class="q-text"><span class="q-num">59</span><span>神降火燒盡祭物這件事印證了甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：以利亞精通魔術"><span class="letter">A</span><span class="txt">以利亞精通魔術</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：祂才是真正的神，更是聽禱告的主"><span class="letter">B</span><span class="txt">祂才是真正的神，更是聽禱告的主</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：巴力先知念錯咒語"><span class="letter">C</span><span class="txt">巴力先知念錯咒語</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：凡事都要靠運氣"><span class="letter">D</span><span class="txt">凡事都要靠運氣</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「印證了祂才是真正的神，更是聽禱告的主！」</p>
+    </article>
+    <article class="q" id="q60" data-n="60" data-answer="A">
+      <h3 class="q-text"><span class="q-num">60</span><span>戴德生在船上經歷風浪同以利亞在祭壇前禱告，這兩個故事共同見證了神是怎樣的神？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：聽禱告、永不失信的信實之神"><span class="letter">A</span><span class="txt">聽禱告、永不失信的信實之神</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：高深莫測的神"><span class="letter">B</span><span class="txt">高深莫測的神</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：要求人做大事的神"><span class="letter">C</span><span class="txt">要求人做大事的神</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：只在古代顯靈的神"><span class="letter">D</span><span class="txt">只在古代顯靈的神</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 兩個故事均見證神垂聽禱告、信實可靠、永不失信。</p>
+    </article>
+  </section>
+  <section class="part" id="part4" data-part="4 ">
+    <div class="part-head">
+      <span class="part-no">PART 04</span>
+      <h2>約瑟轉禍為福</h2>
+      <span class="part-range">第 61–80 題</span>
+    </div>
+    <article class="q" id="q61" data-n="61" data-answer="A">
+      <h3 class="q-text"><span class="q-num">61</span><span>課文介紹約瑟是一個怎樣的人？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：敬畏神的人"><span class="letter">A</span><span class="txt">敬畏神的人</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：貪戀錢財的人"><span class="letter">B</span><span class="txt">貪戀錢財的人</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：驕傲自誇的人"><span class="letter">C</span><span class="txt">驕傲自誇的人</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：心狠手辣的人"><span class="letter">D</span><span class="txt">心狠手辣的人</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 第5課開宗明義：「約瑟是一個敬畏神的人」。</p>
+    </article>
+    <article class="q" id="q62" data-n="62" data-answer="B">
+      <h3 class="q-text"><span class="q-num">62</span><span>約瑟年幼時被誰賣到埃及做奴隸？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：叔叔"><span class="letter">A</span><span class="txt">叔叔</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：哥哥"><span class="letter">B</span><span class="txt">哥哥</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：強盜"><span class="letter">C</span><span class="txt">強盜</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：鄰居"><span class="letter">D</span><span class="txt">鄰居</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出約瑟「年幼時被哥哥賣到埃及做奴隸」。</p>
+    </article>
+    <article class="q" id="q63" data-n="63" data-answer="B">
+      <h3 class="q-text"><span class="q-num">63</span><span>約瑟在埃及做奴隸時，做事態度如何？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：懶散偷安"><span class="letter">A</span><span class="txt">懶散偷安</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：做事忠誠盡心"><span class="letter">B</span><span class="txt">做事忠誠盡心</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：敷衍塞責"><span class="letter">C</span><span class="txt">敷衍塞責</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：心懷怨恨暗中破壞"><span class="letter">D</span><span class="txt">心懷怨恨暗中破壞</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「神保守他，使他做事忠誠盡心」。</p>
+    </article>
+    <article class="q" id="q64" data-n="64" data-answer="B">
+      <h3 class="q-text"><span class="q-num">64</span><span>埃及主人賞識約瑟，交給他甚麼職責？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：只負責在門口守衛"><span class="letter">A</span><span class="txt">只負責在門口守衛</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：把家裏一切都交給他管理"><span class="letter">B</span><span class="txt">把家裏一切都交給他管理</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：叫他到農田粗重勞作"><span class="letter">C</span><span class="txt">叫他到農田粗重勞作</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：只派他照料牲畜"><span class="letter">D</span><span class="txt">只派他照料牲畜</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「主人賞識他，把家裏一切都交給他管理。」</p>
+    </article>
+    <article class="q" id="q65" data-n="65" data-answer="A">
+      <h3 class="q-text"><span class="q-num">65</span><span>誰引誘約瑟，遭到約瑟斷然拒絕？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：主人的妻子（女主人）"><span class="letter">A</span><span class="txt">主人的妻子（女主人）</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：埃及法老的女兒"><span class="letter">B</span><span class="txt">埃及法老的女兒</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：監獄管事的妻子"><span class="letter">C</span><span class="txt">監獄管事的妻子</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：哥哥們的朋友"><span class="letter">D</span><span class="txt">哥哥們的朋友</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文指出：「主人的妻子引誘他，約瑟拒絕了」。</p>
+    </article>
+    <article class="q" id="q66" data-n="66" data-answer="B">
+      <h3 class="q-text"><span class="q-num">66</span><span>女主人遭到約瑟拒絕後，做了甚麼惡事？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：向約瑟認錯道歉"><span class="letter">A</span><span class="txt">向約瑟認錯道歉</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：誣害約瑟，令他身陷監獄"><span class="letter">B</span><span class="txt">誣害約瑟，令他身陷監獄</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：將約瑟逐出埃及"><span class="letter">C</span><span class="txt">將約瑟逐出埃及</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：給約瑟許多金銀"><span class="letter">D</span><span class="txt">給約瑟許多金銀</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「女主人就誣害他，令他身陷監獄。」</p>
+    </article>
+    <article class="q" id="q67" data-n="67" data-answer="B">
+      <h3 class="q-text"><span class="q-num">67</span><span>在監獄中，神給約瑟機會替法老的哪兩個官員解夢？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：宰相和侍衛"><span class="letter">A</span><span class="txt">宰相和侍衛</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：酒政和膳長"><span class="letter">B</span><span class="txt">酒政和膳長</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：司庫和書記"><span class="letter">C</span><span class="txt">司庫和書記</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：將軍和隊長"><span class="letter">D</span><span class="txt">將軍和隊長</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出：「在獄中神給他機會替法老的酒政和膳長解夢」。</p>
+    </article>
+    <article class="q" id="q68" data-n="68" data-answer="B">
+      <h3 class="q-text"><span class="q-num">68</span><span>約瑟替法老的酒政和膳長解夢，結果如何？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：完全猜錯"><span class="letter">A</span><span class="txt">完全猜錯</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：他所說的都應驗了"><span class="letter">B</span><span class="txt">他所說的都應驗了</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：只有一部分實現"><span class="letter">C</span><span class="txt">只有一部分實現</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：法老並不相信"><span class="letter">D</span><span class="txt">法老並不相信</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「他所說的都應驗了。」</p>
+    </article>
+    <article class="q" id="q69" data-n="69" data-answer="B">
+      <h3 class="q-text"><span class="q-num">69</span><span>約瑟幫酒政解夢後，曾請酒政出獄後怎樣幫助他？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：送他回迦南老家"><span class="letter">A</span><span class="txt">送他回迦南老家</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：幫助他重獲自由"><span class="letter">B</span><span class="txt">幫助他重獲自由</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：給他一大筆金子"><span class="letter">C</span><span class="txt">給他一大筆金子</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：替他在法老面前求官"><span class="letter">D</span><span class="txt">替他在法老面前求官</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文記載：「約瑟請酒政幫助他重獲自由」。</p>
+    </article>
+    <article class="q" id="q70" data-n="70" data-answer="B">
+      <h3 class="q-text"><span class="q-num">70</span><span>酒政出獄重獲官職後，他對約瑟的承諾表現如何？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：立刻向法老推薦約瑟"><span class="letter">A</span><span class="txt">立刻向法老推薦約瑟</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：卻遺忘了，約瑟仍然被關在獄中"><span class="letter">B</span><span class="txt">卻遺忘了，約瑟仍然被關在獄中</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：偷偷送飲食給約瑟"><span class="letter">C</span><span class="txt">偷偷送飲食給約瑟</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：派人釋放約瑟"><span class="letter">D</span><span class="txt">派人釋放約瑟</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「酒政出獄後卻遺忘了。約瑟仍然被關在獄中。」</p>
+    </article>
+    <article class="q" id="q71" data-n="71" data-answer="B">
+      <h3 class="q-text"><span class="q-num">71</span><span>酒政出獄過了多少年後，法老做了一個奇怪的夢？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：一年後"><span class="letter">A</span><span class="txt">一年後</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：兩年後"><span class="letter">B</span><span class="txt">兩年後</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：三年後"><span class="letter">C</span><span class="txt">三年後</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：七年後"><span class="letter">D</span><span class="txt">七年後</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「兩年後，法老做了一個奇怪的夢，心裏不安。」</p>
+    </article>
+    <article class="q" id="q72" data-n="72" data-answer="B">
+      <h3 class="q-text"><span class="q-num">72</span><span>法老做了怪夢心裏不安，為甚麼召見約瑟？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：聽說約瑟武藝高強"><span class="letter">A</span><span class="txt">聽說約瑟武藝高強</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：聽說約瑟能解夢"><span class="letter">B</span><span class="txt">聽說約瑟能解夢</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：約瑟主動寫信求見"><span class="letter">C</span><span class="txt">約瑟主動寫信求見</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：法老想要處罰約瑟"><span class="letter">D</span><span class="txt">法老想要處罰約瑟</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「他聽說約瑟能解夢，就召見他。」</p>
+    </article>
+    <article class="q" id="q73" data-n="73" data-answer="B">
+      <h3 class="q-text"><span class="q-num">73</span><span>約瑟站在法老面前時，他是倚靠誰來解說夢境？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：倚靠自己的聰明才智"><span class="letter">A</span><span class="txt">倚靠自己的聰明才智</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：倚靠神"><span class="letter">B</span><span class="txt">倚靠神</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：倚靠埃及的占星術士"><span class="letter">C</span><span class="txt">倚靠埃及的占星術士</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：倚靠酒政的提示"><span class="letter">D</span><span class="txt">倚靠酒政的提示</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文指出：「約瑟倚靠神解說夢境」。</p>
+    </article>
+    <article class="q" id="q74" data-n="74" data-answer="A">
+      <h3 class="q-text"><span class="q-num">74</span><span>約瑟為法老解夢，預言埃及將面臨甚麼情況？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：七個豐年，接着有七個荒年"><span class="letter">A</span><span class="txt">七個豐年，接着有七個荒年</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：七個荒年，接着有七個豐年"><span class="letter">B</span><span class="txt">七個荒年，接着有七個豐年</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：連續十四年大水災"><span class="letter">C</span><span class="txt">連續十四年大水災</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：連續二十年大豐收"><span class="letter">D</span><span class="txt">連續二十年大豐收</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文記載約瑟預言：「埃及將有七個豐年，接着有七個荒年。」</p>
+    </article>
+    <article class="q" id="q75" data-n="75" data-answer="A">
+      <h3 class="q-text"><span class="q-num">75</span><span>約瑟除了替法老解夢，還提出了甚麼明智的建議？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：趁豐年儲存糧食來度過荒年"><span class="letter">A</span><span class="txt">趁豐年儲存糧食來度過荒年</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：趁荒年向鄰國大肆搶奪"><span class="letter">B</span><span class="txt">趁荒年向鄰國大肆搶奪</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：趁豐年大興土木建造宮殿"><span class="letter">C</span><span class="txt">趁豐年大興土木建造宮殿</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：叫百姓各自逃離埃及"><span class="letter">D</span><span class="txt">叫百姓各自逃離埃及</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文記載約瑟建議：「趁豐年儲存糧食來度過荒年。」</p>
+    </article>
+    <article class="q" id="q76" data-n="76" data-answer="B">
+      <h3 class="q-text"><span class="q-num">76</span><span>法老欣賞約瑟的才智，決定任命他擔任甚麼職位？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：侍衛長"><span class="letter">A</span><span class="txt">侍衛長</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：宰相"><span class="letter">B</span><span class="txt">宰相</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：酒政"><span class="letter">C</span><span class="txt">酒政</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：膳長"><span class="letter">D</span><span class="txt">膳長</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「法老欣賞約瑟的才智，立他為宰相。」</p>
+    </article>
+    <article class="q" id="q77" data-n="77" data-answer="B">
+      <h3 class="q-text"><span class="q-num">77</span><span>約瑟在埃及的身份經歷了怎樣戲劇性的巨變？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：從商人到僕人"><span class="letter">A</span><span class="txt">從商人到僕人</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：從奴隸到宰相"><span class="letter">B</span><span class="txt">從奴隸到宰相</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：從將軍到犯人"><span class="letter">C</span><span class="txt">從將軍到犯人</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：從乞丐到君王"><span class="letter">D</span><span class="txt">從乞丐到君王</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「從奴隸到宰相，約瑟多次遇上困境」。</p>
+    </article>
+    <article class="q" id="q78" data-n="78" data-answer="A">
+      <h3 class="q-text"><span class="q-num">78</span><span>約瑟身處多次困境中，他抱持甚麼態度？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：他不灰心，全心全意信靠神，行事正直"><span class="letter">A</span><span class="txt">他不灰心，全心全意信靠神，行事正直</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：怨天尤人，放棄希望"><span class="letter">B</span><span class="txt">怨天尤人，放棄希望</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：心懷詭詐，伺機報復"><span class="letter">C</span><span class="txt">心懷詭詐，伺機報復</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：隨波逐流，放棄信仰"><span class="letter">D</span><span class="txt">隨波逐流，放棄信仰</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文讚揚約瑟：「他不灰心，全心全意信靠神，行事正直。」</p>
+    </article>
+    <article class="q" id="q79" data-n="79" data-answer="A">
+      <h3 class="q-text"><span class="q-num">79</span><span>神在逆境中給了約瑟甚麼保守？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：令他在逆境中經歷奇妙的帶領和扶助，轉禍為福"><span class="letter">A</span><span class="txt">令他在逆境中經歷奇妙的帶領和扶助，轉禍為福</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：賜給他隱身的能力"><span class="letter">B</span><span class="txt">賜給他隱身的能力</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：讓他從未遭遇過挫折"><span class="letter">C</span><span class="txt">讓他從未遭遇過挫折</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：讓他立刻離開埃及"><span class="letter">D</span><span class="txt">讓他立刻離開埃及</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文原文：「神保守他，令他在逆境中經歷奇妙的帶領和扶助，轉禍為福。」</p>
+    </article>
+    <article class="q" id="q80" data-n="80" data-answer="A">
+      <h3 class="q-text"><span class="q-num">80</span><span>第5課的課題是甚麼，用來總結約瑟的一生最為貼切？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：約瑟轉禍為福"><span class="letter">A</span><span class="txt">約瑟轉禍為福</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：約瑟逃出埃及"><span class="letter">B</span><span class="txt">約瑟逃出埃及</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：信實的神"><span class="letter">C</span><span class="txt">信實的神</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：萬物見證神"><span class="letter">D</span><span class="txt">萬物見證神</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 第5課標題即為「5 約瑟轉禍為福」。</p>
+    </article>
+  </section>
+  <section class="part" id="part5" data-part="5 ">
+    <div class="part-head">
+      <span class="part-no">PART 05</span>
+      <h2>雅各生命改變</h2>
+      <span class="part-range">第 81–100 題</span>
+    </div>
+    <article class="q" id="q81" data-n="81" data-answer="B">
+      <h3 class="q-text"><span class="q-num">81</span><span>雅各起初是因為甚麼事，害怕哥哥以掃找他算帳而逃走？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：偷了哥哥的弓箭"><span class="letter">A</span><span class="txt">偷了哥哥的弓箭</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：騙取了長子祝福"><span class="letter">B</span><span class="txt">騙取了長子祝福</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：打破了家裡的祭壇"><span class="letter">C</span><span class="txt">打破了家裡的祭壇</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：搶奪了哥哥的彩衣"><span class="letter">D</span><span class="txt">搶奪了哥哥的彩衣</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文開頭寫道：「雅各騙取了長子祝福後，因怕哥哥以掃找他算帳，逃到舅父家。」</p>
+    </article>
+    <article class="q" id="q82" data-n="82" data-answer="A">
+      <h3 class="q-text"><span class="q-num">82</span><span>雅各逃到哪裡避難？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：舅父家"><span class="letter">A</span><span class="txt">舅父家</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：埃及法老王宮"><span class="letter">B</span><span class="txt">埃及法老王宮</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：荒島沙漠"><span class="letter">C</span><span class="txt">荒島沙漠</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：好朋友家"><span class="letter">D</span><span class="txt">好朋友家</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文原文：「逃到舅父家」。</p>
+    </article>
+    <article class="q" id="q83" data-n="83" data-answer="C">
+      <h3 class="q-text"><span class="q-num">83</span><span>雅各在舅父家過了多少年後，才領著家人回家去？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：七年後"><span class="letter">A</span><span class="txt">七年後</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：十年後"><span class="letter">B</span><span class="txt">十年後</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：二十年後"><span class="letter">C</span><span class="txt">二十年後</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：四十年後"><span class="letter">D</span><span class="txt">四十年後</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>C</strong> · 課文原文：「二十年後，雅各領着家人回家去」。</p>
+    </article>
+    <article class="q" id="q84" data-n="84" data-answer="B">
+      <h3 class="q-text"><span class="q-num">84</span><span>雅各回家途中聽說以掃帶了多少人迎面而來？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：三百人"><span class="letter">A</span><span class="txt">三百人</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：四百人"><span class="letter">B</span><span class="txt">四百人</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：四百五十人"><span class="letter">C</span><span class="txt">四百五十人</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：一千人"><span class="letter">D</span><span class="txt">一千人</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「途中聽說以掃帶着四百人迎面而來」。</p>
+    </article>
+    <article class="q" id="q85" data-n="85" data-answer="B">
+      <h3 class="q-text"><span class="q-num">85</span><span>聽說以掃帶著四百人前來，雅各當時的心情如何？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：欣喜若狂"><span class="letter">A</span><span class="txt">欣喜若狂</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：十分懼怕"><span class="letter">B</span><span class="txt">十分懼怕</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：毫不在乎"><span class="letter">C</span><span class="txt">毫不在乎</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：勝券在握"><span class="letter">D</span><span class="txt">勝券在握</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「途中聽說以掃帶着四百人迎面而來，十分懼怕。」</p>
+    </article>
+    <article class="q" id="q86" data-n="86" data-answer="B">
+      <h3 class="q-text"><span class="q-num">86</span><span>那晚雅各把家人送到哪裡，剩下自己一人思考應對方法？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：紅海對岸"><span class="letter">A</span><span class="txt">紅海對岸</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：雅博河對岸"><span class="letter">B</span><span class="txt">雅博河對岸</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：尼羅河對岸"><span class="letter">C</span><span class="txt">尼羅河對岸</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：約旦河源頭"><span class="letter">D</span><span class="txt">約旦河源頭</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「那晚，他把家人送到雅博河對岸，剩下自己一人思考如何應對。」</p>
+    </article>
+    <article class="q" id="q87" data-n="87" data-answer="B">
+      <h3 class="q-text"><span class="q-num">87</span><span>當雅各獨自一人時，忽然發生了甚麼事？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：狂風暴雨降臨"><span class="letter">A</span><span class="txt">狂風暴雨降臨</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：有一個人來和他摔跤，直至黎明"><span class="letter">B</span><span class="txt">有一個人來和他摔跤，直至黎明</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：以掃的士兵突襲他"><span class="letter">C</span><span class="txt">以掃的士兵突襲他</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：天使向他高聲歌唱"><span class="letter">D</span><span class="txt">天使向他高聲歌唱</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「忽然有一個人來和他摔跤，直至黎明。」</p>
+    </article>
+    <article class="q" id="q88" data-n="88" data-answer="C">
+      <h3 class="q-text"><span class="q-num">88</span><span>摔跤持續到甚麼時候？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：直至黃昏"><span class="letter">A</span><span class="txt">直至黃昏</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：直至半夜"><span class="letter">B</span><span class="txt">直至半夜</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：直至黎明"><span class="letter">C</span><span class="txt">直至黎明</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：整整三天三夜"><span class="letter">D</span><span class="txt">整整三天三夜</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>C</strong> · 課文寫道：「忽然有一個人來和他摔跤，直至黎明。」</p>
+    </article>
+    <article class="q" id="q89" data-n="89" data-answer="B">
+      <h3 class="q-text"><span class="q-num">89</span><span>那人見無法戰勝雅各，做了甚麼動作？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：拿寶劍刺傷他"><span class="letter">A</span><span class="txt">拿寶劍刺傷他</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：摸了他大腿一下"><span class="letter">B</span><span class="txt">摸了他大腿一下</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：向他投擲石塊"><span class="letter">C</span><span class="txt">向他投擲石塊</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：轉身跳入河中"><span class="letter">D</span><span class="txt">轉身跳入河中</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「這人見無法戰勝雅各，摸了他大腿一下」。</p>
+    </article>
+    <article class="q" id="q90" data-n="90" data-answer="A">
+      <h3 class="q-text"><span class="q-num">90</span><span>那人摸了雅各的大腿一下之後，雅各的身體有何變化？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：雅各的腿就瘸了"><span class="letter">A</span><span class="txt">雅各的腿就瘸了</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：雅各立刻昏倒過去"><span class="letter">B</span><span class="txt">雅各立刻昏倒過去</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：雅各長出翅膀"><span class="letter">C</span><span class="txt">雅各長出翅膀</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：雅各力量倍增"><span class="letter">D</span><span class="txt">雅各力量倍增</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文原文：「雅各的腿就瘸了。」</p>
+    </article>
+    <article class="q" id="q91" data-n="91" data-answer="B">
+      <h3 class="q-text"><span class="q-num">91</span><span>雅各知道這與他摔跤的人是誰？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：是以掃派來的刺客"><span class="letter">A</span><span class="txt">是以掃派來的刺客</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：是神"><span class="letter">B</span><span class="txt">是神</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：只是一個普通路人"><span class="letter">C</span><span class="txt">只是一個普通路人</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：是舅父拉班"><span class="letter">D</span><span class="txt">是舅父拉班</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「雅各知道這人是神，他需要祂的祝福，幫他勝過難關」。</p>
+    </article>
+    <article class="q" id="q92" data-n="92" data-answer="B">
+      <h3 class="q-text"><span class="q-num">92</span><span>雅各緊抓著那人，對祂說了甚麼迫切的話？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：「請賠償我醫藥費！」"><span class="letter">A</span><span class="txt">「請賠償我醫藥費！」</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：「我不讓祢走，除非祢給我祝福！」"><span class="letter">B</span><span class="txt">「我不讓祢走，除非祢給我祝福！」</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：「請救救我的財產！」"><span class="letter">C</span><span class="txt">「請救救我的財產！」</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：「你究竟是敵是友？」"><span class="letter">D</span><span class="txt">「你究竟是敵是友？」</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「就對那人說：『我不讓祢走，除非祢給我祝福！』」</p>
+    </article>
+    <article class="q" id="q93" data-n="93" data-answer="C">
+      <h3 class="q-text"><span class="q-num">93</span><span>那人問雅各名字後，給雅各改名叫甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：亞伯拉罕"><span class="letter">A</span><span class="txt">亞伯拉罕</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：以掃"><span class="letter">B</span><span class="txt">以掃</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：以色列"><span class="letter">C</span><span class="txt">以色列</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：以利亞"><span class="letter">D</span><span class="txt">以利亞</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>C</strong> · 課文原文：「那人說：『你要改名叫以色列』」。</p>
+    </article>
+    <article class="q" id="q94" data-n="94" data-answer="B">
+      <h3 class="q-text"><span class="q-num">94</span><span>那人為什麼給雅各改名叫「以色列」？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：因為他是富甲一方的族長"><span class="letter">A</span><span class="txt">因為他是富甲一方的族長</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：因為你與神和人較力，都得了勝"><span class="letter">B</span><span class="txt">因為你與神和人較力，都得了勝</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：因為他精通各樣計謀"><span class="letter">C</span><span class="txt">因為他精通各樣計謀</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：因為他擅長逃跑與摔跤"><span class="letter">D</span><span class="txt">因為他擅長逃跑與摔跤</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「因為你與神和人較力，都得了勝。」</p>
+    </article>
+    <article class="q" id="q95" data-n="95" data-answer="B">
+      <h3 class="q-text"><span class="q-num">95</span><span>那人最後給了雅各甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：黃金百兩"><span class="letter">A</span><span class="txt">黃金百兩</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：雅各祝福"><span class="letter">B</span><span class="txt">雅各祝福</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：一把寶劍"><span class="letter">C</span><span class="txt">一把寶劍</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：一座城堡"><span class="letter">D</span><span class="txt">一座城堡</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文原文：「最後，那人給了雅各祝福。」</p>
+    </article>
+    <article class="q" id="q96" data-n="96" data-answer="B">
+      <h3 class="q-text"><span class="q-num">96</span><span>摔跤蒙祝福之後，雅各的心態發生了甚麼轉變？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：更加懼怕並漏夜逃跑"><span class="letter">A</span><span class="txt">更加懼怕並漏夜逃跑</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：勇敢迎接以掃的到來"><span class="letter">B</span><span class="txt">勇敢迎接以掃的到來</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：決定招兵買馬與以掃決戰"><span class="letter">C</span><span class="txt">決定招兵買馬與以掃決戰</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：假裝生病臥床不起"><span class="letter">D</span><span class="txt">假裝生病臥床不起</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文寫道：「自此，雅各的生命改變了。他勇敢迎接以掃的到來。」</p>
+    </article>
+    <article class="q" id="q97" data-n="97" data-answer="A">
+      <h3 class="q-text"><span class="q-num">97</span><span>雅各的新名字象徵甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：人生有了新方向"><span class="letter">A</span><span class="txt">人生有了新方向</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：他成了至高無上的君王"><span class="letter">B</span><span class="txt">他成了至高無上的君王</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：他永遠不會再遇到困難"><span class="letter">C</span><span class="txt">他永遠不會再遇到困難</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：他失去了所有過去的記憶"><span class="letter">D</span><span class="txt">他失去了所有過去的記憶</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文原文：「他的新名字象徵人生有了新方向」。</p>
+    </article>
+    <article class="q" id="q98" data-n="98" data-answer="A">
+      <h3 class="q-text"><span class="q-num">98</span><span>雅各在生命改變之前，他是靠甚麼生活的？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：靠自己的力量和努力"><span class="letter">A</span><span class="txt">靠自己的力量和努力</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：靠神的恩典和引領"><span class="letter">B</span><span class="txt">靠神的恩典和引領</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：靠哥哥以掃的保護"><span class="letter">C</span><span class="txt">靠哥哥以掃的保護</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：靠舅父的仁慈憐憫"><span class="letter">D</span><span class="txt">靠舅父的仁慈憐憫</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>A</strong> · 課文寫道：「從前他靠自己的力量和努力」。</p>
+    </article>
+    <article class="q" id="q99" data-n="99" data-answer="C">
+      <h3 class="q-text"><span class="q-num">99</span><span>雅各在生命改變之後，轉而倚靠甚麼？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：倚靠金錢與地位"><span class="letter">A</span><span class="txt">倚靠金錢與地位</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：倚靠四百名僕人"><span class="letter">B</span><span class="txt">倚靠四百名僕人</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：倚靠神的恩典和能力"><span class="letter">C</span><span class="txt">倚靠神的恩典和能力</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：倚靠自己的謀略計策"><span class="letter">D</span><span class="txt">倚靠自己的謀略計策</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>C</strong> · 課文寫道：「現在倚靠神的恩典和能力」。</p>
+    </article>
+    <article class="q" id="q100" data-n="100" data-answer="B">
+      <h3 class="q-text"><span class="q-num">100</span><span>雅各生命改變後，他的行事為人變得怎樣？</span></h3>
+      <div class="opts">
+        <button class="opt" type="button" data-letter="A" aria-label="選項 A：更加狡猾與詭詐"><span class="letter">A</span><span class="txt">更加狡猾與詭詐</span></button>
+        <button class="opt" type="button" data-letter="B" aria-label="選項 B：更遵從神的教導和旨意"><span class="letter">B</span><span class="txt">更遵從神的教導和旨意</span></button>
+        <button class="opt" type="button" data-letter="C" aria-label="選項 C：遠離人群過隱居生活"><span class="letter">C</span><span class="txt">遠離人群過隱居生活</span></button>
+        <button class="opt" type="button" data-letter="D" aria-label="選項 D：只顧建立自己的名聲"><span class="letter">D</span><span class="txt">只顧建立自己的名聲</span></button>
+      </div>
+      <p class="answer-line">正確答案：<strong>B</strong> · 課文結尾總結：「行事為人更遵從神的教導和旨意。」</p>
+    </article>
+  </section>
+  <section class="key" id="answerKey">
+    <div class="key-head">
+      <h2>參考答案卡（1–100 題）</h2>
+      <span>點擊上方「顯示答案」即可對照全卷答案</span>
+    </div>
+    <div class="key-grid">
+      <div class="key-cell"><span>1</span><b>A</b></div>
+      <div class="key-cell"><span>2</span><b>C</b></div>
+      <div class="key-cell"><span>3</span><b>B</b></div>
+      <div class="key-cell"><span>4</span><b>A</b></div>
+      <div class="key-cell"><span>5</span><b>A</b></div>
+      <div class="key-cell"><span>6</span><b>B</b></div>
+      <div class="key-cell"><span>7</span><b>C</b></div>
+      <div class="key-cell"><span>8</span><b>B</b></div>
+      <div class="key-cell"><span>9</span><b>A</b></div>
+      <div class="key-cell"><span>10</span><b>B</b></div>
+      <div class="key-cell"><span>11</span><b>B</b></div>
+      <div class="key-cell"><span>12</span><b>A</b></div>
+      <div class="key-cell"><span>13</span><b>C</b></div>
+      <div class="key-cell"><span>14</span><b>A</b></div>
+      <div class="key-cell"><span>15</span><b>A</b></div>
+      <div class="key-cell"><span>16</span><b>B</b></div>
+      <div class="key-cell"><span>17</span><b>B</b></div>
+      <div class="key-cell"><span>18</span><b>A</b></div>
+      <div class="key-cell"><span>19</span><b>B</b></div>
+      <div class="key-cell"><span>20</span><b>A</b></div>
+      <div class="key-cell"><span>21</span><b>B</b></div>
+      <div class="key-cell"><span>22</span><b>C</b></div>
+      <div class="key-cell"><span>23</span><b>A</b></div>
+      <div class="key-cell"><span>24</span><b>B</b></div>
+      <div class="key-cell"><span>25</span><b>B</b></div>
+      <div class="key-cell"><span>26</span><b>B</b></div>
+      <div class="key-cell"><span>27</span><b>B</b></div>
+      <div class="key-cell"><span>28</span><b>B</b></div>
+      <div class="key-cell"><span>29</span><b>A</b></div>
+      <div class="key-cell"><span>30</span><b>B</b></div>
+      <div class="key-cell"><span>31</span><b>B</b></div>
+      <div class="key-cell"><span>32</span><b>A</b></div>
+      <div class="key-cell"><span>33</span><b>B</b></div>
+      <div class="key-cell"><span>34</span><b>B</b></div>
+      <div class="key-cell"><span>35</span><b>A</b></div>
+      <div class="key-cell"><span>36</span><b>B</b></div>
+      <div class="key-cell"><span>37</span><b>A</b></div>
+      <div class="key-cell"><span>38</span><b>B</b></div>
+      <div class="key-cell"><span>39</span><b>A</b></div>
+      <div class="key-cell"><span>40</span><b>A</b></div>
+      <div class="key-cell"><span>41</span><b>B</b></div>
+      <div class="key-cell"><span>42</span><b>A</b></div>
+      <div class="key-cell"><span>43</span><b>A</b></div>
+      <div class="key-cell"><span>44</span><b>B</b></div>
+      <div class="key-cell"><span>45</span><b>A</b></div>
+      <div class="key-cell"><span>46</span><b>B</b></div>
+      <div class="key-cell"><span>47</span><b>B</b></div>
+      <div class="key-cell"><span>48</span><b>B</b></div>
+      <div class="key-cell"><span>49</span><b>B</b></div>
+      <div class="key-cell"><span>50</span><b>A</b></div>
+      <div class="key-cell"><span>51</span><b>A</b></div>
+      <div class="key-cell"><span>52</span><b>B</b></div>
+      <div class="key-cell"><span>53</span><b>B</b></div>
+      <div class="key-cell"><span>54</span><b>B</b></div>
+      <div class="key-cell"><span>55</span><b>B</b></div>
+      <div class="key-cell"><span>56</span><b>B</b></div>
+      <div class="key-cell"><span>57</span><b>A</b></div>
+      <div class="key-cell"><span>58</span><b>B</b></div>
+      <div class="key-cell"><span>59</span><b>B</b></div>
+      <div class="key-cell"><span>60</span><b>A</b></div>
+      <div class="key-cell"><span>61</span><b>A</b></div>
+      <div class="key-cell"><span>62</span><b>B</b></div>
+      <div class="key-cell"><span>63</span><b>B</b></div>
+      <div class="key-cell"><span>64</span><b>B</b></div>
+      <div class="key-cell"><span>65</span><b>A</b></div>
+      <div class="key-cell"><span>66</span><b>B</b></div>
+      <div class="key-cell"><span>67</span><b>B</b></div>
+      <div class="key-cell"><span>68</span><b>B</b></div>
+      <div class="key-cell"><span>69</span><b>B</b></div>
+      <div class="key-cell"><span>70</span><b>B</b></div>
+      <div class="key-cell"><span>71</span><b>B</b></div>
+      <div class="key-cell"><span>72</span><b>B</b></div>
+      <div class="key-cell"><span>73</span><b>B</b></div>
+      <div class="key-cell"><span>74</span><b>A</b></div>
+      <div class="key-cell"><span>75</span><b>A</b></div>
+      <div class="key-cell"><span>76</span><b>B</b></div>
+      <div class="key-cell"><span>77</span><b>B</b></div>
+      <div class="key-cell"><span>78</span><b>A</b></div>
+      <div class="key-cell"><span>79</span><b>A</b></div>
+      <div class="key-cell"><span>80</span><b>A</b></div>
+      <div class="key-cell"><span>81</span><b>B</b></div>
+      <div class="key-cell"><span>82</span><b>A</b></div>
+      <div class="key-cell"><span>83</span><b>C</b></div>
+      <div class="key-cell"><span>84</span><b>B</b></div>
+      <div class="key-cell"><span>85</span><b>B</b></div>
+      <div class="key-cell"><span>86</span><b>B</b></div>
+      <div class="key-cell"><span>87</span><b>B</b></div>
+      <div class="key-cell"><span>88</span><b>C</b></div>
+      <div class="key-cell"><span>89</span><b>B</b></div>
+      <div class="key-cell"><span>90</span><b>A</b></div>
+      <div class="key-cell"><span>91</span><b>B</b></div>
+      <div class="key-cell"><span>92</span><b>B</b></div>
+      <div class="key-cell"><span>93</span><b>C</b></div>
+      <div class="key-cell"><span>94</span><b>B</b></div>
+      <div class="key-cell"><span>95</span><b>B</b></div>
+      <div class="key-cell"><span>96</span><b>B</b></div>
+      <div class="key-cell"><span>97</span><b>A</b></div>
+      <div class="key-cell"><span>98</span><b>A</b></div>
+      <div class="key-cell"><span>99</span><b>C</b></div>
+      <div class="key-cell"><span>100</span><b>B</b></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>聖經問答 100 題 · 四選一 · 完全根據課本 8 頁內容編製</span>
+  <span>點選選項即時核對答案</span>
+</footer>
+
+<script>
+(function () {
+  var answered = new Set();
+  var score = 0;
+  var answeredEl = document.getElementById('answered');
+  var scoreEl = document.getElementById('score');
+  var fillEl = document.getElementById('fill');
+
+  function updateHUD() {
+    answeredEl.textContent = answered.size;
+    scoreEl.textContent = score;
+    fillEl.style.width = (answered.size / 100 * 100) + '%';
+  }
+
+  document.querySelectorAll('.q').forEach(function (card) {
+    var answer = card.dataset.answer;
+    var n = card.dataset.n;
+    card.querySelectorAll('.opt').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (answered.has(n)) return;
+        answered.add(n);
+        card.classList.add('answered');
+        var picked = btn.dataset.letter;
+        if (picked === answer) {
+          btn.classList.add('correct');
+          score++;
+        } else {
+          btn.classList.add('wrong');
+          card.querySelector('.opt[data-letter="' + answer + '"]').classList.add('correct');
+        }
+        updateHUD();
+      });
+    });
+  });
+
+  document.getElementById('reset').addEventListener('click', function () {
+    answered.clear();
+    score = 0;
+    document.querySelectorAll('.q').forEach(function (card) {
+      card.classList.remove('answered');
+      card.querySelectorAll('.opt').forEach(function (btn) {
+        btn.classList.remove('correct', 'wrong');
+      });
+    });
+    updateHUD();
+  });
+
+  document.getElementById('reveal').addEventListener('click', function () {
+    document.body.classList.toggle('reveal');
+    this.textContent = document.body.classList.contains('reveal') ? '隱藏答案' : '顯示答案';
+  });
+
+  document.getElementById('print').addEventListener('click', function () { window.print(); });
+
+  document.querySelectorAll('.chip').forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      document.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('active'); });
+      chip.classList.add('active');
+      var f = chip.dataset.filter;
+      document.querySelectorAll('.part').forEach(function (p) {
+        p.hidden = f !== 'all' && p.id !== f;
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+</body>
+</html>
